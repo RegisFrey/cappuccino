@@ -240,7 +240,14 @@ function CGContextSetAlpha(aContext, anAlpha)
 
 function CGContextSetFillColor(aContext, aColor)
 {
-    aContext.fillStyle = [aColor cssString];
+    if ([aColor patternImage]) {
+		var pattern = new Image();
+		pattern.src = [[aColor patternImage] filename];
+		var ptrn = aContext.createPattern(pattern,'repeat');
+        aContext.fillStyle = ptrn;
+    } else {
+        aContext.fillStyle = [aColor cssString];
+    }
 }
 
 function CGContextSetStrokeColor(aContext, aColor)
